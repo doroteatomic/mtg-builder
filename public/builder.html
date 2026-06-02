@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MTG Builder — My Decks</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/builder.css">
+</head>
+<body>
+
+  
+  <header class="builder-header">
+    <a href="index.html" class="builder-logo">⟵ MTG Hub</a>
+    <h1 class="builder-title">My Decks</h1>
+    <div class="builder-user">
+      <span id="builder-username"></span>
+      <button id="builder-logout" class="btn-ghost">Log out</button>
+    </div>
+  </header>
+
+  
+  <main class="builder-main">
+
+    
+    <section class="deck-list-section">
+      <div class="deck-list-header">
+        <h2>Decks</h2>
+        <button id="new-deck-btn" class="btn-accent">+ New deck</button>
+      </div>
+      <ul id="deck-list" class="deck-list">
+        <li class="deck-list-empty">No decks yet. Create your first one!</li>
+      </ul>
+    </section>
+
+    
+    <section class="deck-editor" id="deck-editor">
+      <div class="deck-editor-placeholder" id="editor-placeholder">
+        <div class="placeholder-inner">
+          <div class="placeholder-icon">⚔</div>
+          <p>No deck selected.</p>
+          <p class="placeholder-sub">Click a deck on the left or create a new one.</p>
+          <button class="btn-accent" onclick="document.getElementById('new-deck-btn').click()">+ New deck</button>
+        </div>
+      </div>
+
+      <div class="deck-editor-form" id="editor-form" hidden>
+        <div class="editor-top">
+          <input id="deck-name" class="editor-name-input" type="text" placeholder="Deck name…" maxlength="60">
+          <select id="deck-format" class="editor-select">
+            <option>Commander</option>
+            <option>Draft</option>
+            <option>Legacy</option>
+            <option>Modern</option>
+            <option>Pioneer</option>
+            <option>Standard</option>
+            <option>Vintage</option>
+          </select>
+          <div class="editor-actions">
+            <button id="save-deck-btn" class="btn-accent">Save</button>
+            <button id="delete-deck-btn" class="btn-danger">Delete</button>
+          </div>
+        </div>
+
+        
+        <div class="color-picker">
+          <span class="color-picker-label">Colors:</span>
+          <button class="color-pill" data-color="W" title="White"><img src="img/plains.png" alt="White"></button>
+          <button class="color-pill" data-color="U" title="Blue"><img src="img/island.png" alt="Blue"></button>
+          <button class="color-pill" data-color="B" title="Black"><img src="img/swamp.png" alt="Black"></button>
+          <button class="color-pill" data-color="R" title="Red"><img src="img/mountain.png" alt="Red"></button>
+          <button class="color-pill" data-color="G" title="Green"><img src="img/forest.png" alt="Green"></button>
+        </div>
+
+        
+        <textarea id="deck-notes" class="editor-notes" placeholder="Notes, strategy, sideboard ideas…" rows="4"></textarea>
+
+        
+        <div class="card-search-bar">
+          <div class="card-search-input-wrap">
+            <input id="card-search-input" type="text" placeholder="Search card by name (Scryfall)…" autocomplete="off">
+            <button id="card-search-clear" class="card-search-clear" title="Clear" hidden>✕</button>
+          </div>
+          <button id="card-search-btn" class="btn-accent">Search</button>
+        </div>
+        <div id="card-search-results" class="card-search-results" hidden></div>
+
+        
+        <div class="cards-in-deck">
+          <div class="cards-in-deck-header">
+            <h3>Cards <span id="card-count" class="card-count-badge">0</span></h3>
+            <div class="sort-btns">
+              <button class="sort-btn active" data-sort="none">Default</button>
+              <button class="sort-btn" data-sort="name">A–Z</button>
+              <button class="sort-btn" data-sort="cmc">Mana value</button>
+            </div>
+          </div>
+          <ul id="card-list" class="card-list"></ul>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── Card preview modal ────────────────────────────────── -->
+  <!-- Image zoom overlay -->
+  <div id="zoom-overlay" class="zoom-overlay" hidden>
+    <img id="zoom-img" src="" alt="" draggable="false">
+  </div>
+
+  <div id="preview-backdrop" class="preview-backdrop" hidden></div>
+  <div id="preview-modal" class="preview-modal" hidden>
+    <button id="preview-close" class="preview-close">✕</button>
+    <div class="preview-modal-body">
+      <img id="preview-img" src="" alt="" draggable="false">
+      <div id="preview-info" class="preview-info"></div>
+    </div>
+    <div class="preview-modal-footer" id="preview-footer" hidden>
+      <button id="preview-add-sb-btn" class="preview-add-btn" hidden>+ Add to sideboard</button>
+      <button id="preview-add-btn" class="btn-accent preview-add-btn">+ Add to deck</button>
+    </div>
+  </div>
+
+  <script src="js/auth.js"></script>
+  <script src="js/builder.js"></script>
+</body>
+</html>

@@ -1,0 +1,444 @@
+/* ── Reset & Variables ────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:        #2e3f72;
+  --bg-dark:   #1a2650;
+  --bg-panel:  #253468;
+  --accent:    #f5c518;
+  --text:      #ffffff;
+  --text-dim:  #b8ccff;
+  --text-muted:#6a88c0;
+  --border:    rgba(245,197,24,0.25);
+  --radius:    4px;
+}
+
+html, body {
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Fraunces', Georgia, serif;
+}
+
+/* Halftone dot background — all pages */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(rgba(255,255,255,0.045) 1px, transparent 1px);
+  background-size: 9px 9px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Background image — landing page only (overrides halftone) */
+body.page-landing::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url('../img/bg_other4.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Blue overlay — landing page only */
+body.page-landing::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 30, 80, 0.5);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Landing ──────────────────────────────────────────────────── */
+.landing {
+  position: relative;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  padding: 40px 24px;
+}
+
+.landing-scene {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 80px;
+  max-width: 1100px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+/* Left: title */
+.landing-left {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.landing-title {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.title-the {
+  font-family: 'Fraunces', serif;
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: var(--accent);
+  letter-spacing: 0.25em;
+  margin-bottom: 4px;
+}
+
+.title-gathering {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3.5rem, 8vw, 6rem);
+  color: var(--text);
+  letter-spacing: 0.05em;
+}
+
+.title-room {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3.5rem, 8vw, 6rem);
+  color: var(--accent);
+  letter-spacing: 0.05em;
+}
+
+.landing-sub {
+  font-family: 'Fraunces', serif;
+  font-size: 1rem;
+  font-weight: 300;
+  color: var(--text-dim);
+  line-height: 1.7;
+  max-width: 280px;
+}
+
+/* ── Portal cards ─────────────────────────────────────────────── */
+.landing-cards {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.portal-card {
+  position: relative;
+  width: 240px;
+  height: 340px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 12px;
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--text);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  overflow: hidden;
+}
+
+.portal-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(245,197,24,0.06) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.portal-card:hover {
+  transform: translateY(-8px) rotate(-1deg);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.4), 0 0 0 1px rgba(245,197,24,0.5);
+  border-color: rgba(245,197,24,0.5);
+  background: rgba(255, 255, 255, 0.13);
+}
+
+.portal-card-inner {
+  padding: 28px 24px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.portal-card-num {
+  font-family: 'Fraunces', serif;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+}
+
+.portal-card-icon {
+  font-size: 2rem;
+  color: var(--accent);
+  margin: 4px 0;
+}
+
+.portal-card-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+  line-height: 1.05;
+  letter-spacing: 0.04em;
+  color: var(--text);
+}
+
+.portal-card-desc {
+  font-family: 'Fraunces', serif;
+  font-size: 0.82rem;
+  font-weight: 300;
+  color: var(--text-dim);
+  line-height: 1.6;
+  flex: 1;
+}
+
+.portal-card-cta {
+  font-family: 'Fraunces', serif;
+  font-size: 0.8rem;
+  color: var(--accent);
+  letter-spacing: 0.05em;
+  margin-top: auto;
+}
+
+/* Analytics card accent */
+.portal-analytics { border-top: 3px solid var(--accent); }
+
+/* Builder card — dimmed until logged in */
+.portal-builder { border-top: 3px solid var(--text-muted); }
+.portal-builder.unlocked { border-top-color: var(--accent); cursor: pointer; }
+
+.portal-card-lock {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  font-size: 0.9rem;
+  opacity: 0.5;
+}
+.portal-builder.unlocked .portal-card-lock { display: none; }
+
+/* ── User bar ─────────────────────────────────────────────────── */
+.user-bar {
+  position: fixed;
+  top: 16px;
+  right: 20px;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 10px;
+  padding: 8px 16px;
+  font-family: 'Fraunces', serif;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  backdrop-filter: blur(8px);
+}
+
+.logout-btn {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-family: 'Fraunces', serif;
+  font-size: 0.78rem;
+  padding: 4px 10px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+.logout-btn:hover { color: var(--accent); border-color: var(--accent); }
+
+/* ── Auth modal ───────────────────────────────────────────────── */
+.auth-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(10,18,45,0.7);
+  backdrop-filter: blur(4px);
+  z-index: 900;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.auth-backdrop.open { opacity: 1; pointer-events: auto; }
+
+.auth-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -44%) scale(0.95);
+  z-index: 1000;
+  width: min(420px, 92vw);
+  background: var(--bg-dark);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 36px 32px 28px;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.6), inset 4px 0 0 rgba(245,197,24,0.35);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.auth-modal.open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.auth-close {
+  position: absolute;
+  top: 12px; right: 14px;
+  background: none; border: none;
+  color: var(--text-muted); font-size: 1rem;
+  cursor: pointer; transition: color 0.15s;
+}
+.auth-close:hover { color: var(--accent); }
+
+/* Tabs */
+.auth-tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+}
+.auth-tab {
+  background: none; border: none;
+  font-family: 'Fraunces', serif;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  padding: 8px 20px 10px;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.15s;
+}
+.auth-tab.active { color: var(--accent); }
+.auth-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; left: 0; right: 0;
+  height: 2px;
+  background: var(--accent);
+}
+
+/* Forms */
+.auth-form { display: none; flex-direction: column; gap: 16px; }
+.auth-form.active { display: flex; }
+
+.auth-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.8rem;
+  letter-spacing: 0.05em;
+  color: var(--text);
+  margin-bottom: -8px;
+}
+.auth-subtitle {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.field-group label {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.field-group input {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-family: 'Fraunces', serif;
+  font-size: 0.92rem;
+  padding: 10px 12px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.field-group input::placeholder { color: var(--text-muted); }
+.field-group input:focus { border-color: rgba(245,197,24,0.5); }
+.field-group input.invalid { border-color: #e07070; }
+
+.field-error {
+  font-size: 0.74rem;
+  color: #e07070;
+  min-height: 16px;
+}
+.form-error {
+  text-align: center;
+  margin: -4px 0;
+}
+
+.auth-submit {
+  margin-top: 4px;
+  background: var(--accent);
+  border: none;
+  border-radius: var(--radius);
+  color: var(--bg-dark);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.05rem;
+  letter-spacing: 0.08em;
+  padding: 13px;
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.1s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.auth-submit:hover { opacity: 0.9; }
+.auth-submit:active { transform: scale(0.98); }
+.auth-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.btn-spinner {
+  display: none;
+  width: 16px; height: 16px;
+  border: 2px solid rgba(0,0,0,0.2);
+  border-top-color: var(--bg-dark);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+.auth-submit.loading .btn-spinner { display: block; }
+.auth-submit.loading .btn-label { opacity: 0.6; }
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.auth-switch {
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+.auth-link {
+  background: none; border: none;
+  color: var(--accent);
+  font-family: 'Fraunces', serif;
+  font-size: 0.8rem;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* ── Responsive ───────────────────────────────────────────────── */
+@media (max-width: 700px) {
+  .landing-scene { gap: 40px; }
+  .landing-cards { gap: 16px; }
+  .portal-card { width: 200px; height: 300px; }
+  .landing-title { align-items: center; }
+  .landing-sub { text-align: center; }
+}
+
+@media (max-width: 480px) {
+  .portal-card { width: 160px; height: 270px; }
+  .portal-card-title { font-size: 1.6rem; }
+}
