@@ -1,11 +1,16 @@
 const admin = require('firebase-admin');
+const fs    = require('fs');
+const path  = require('path');
 
 if (!admin.apps.length) {
-  const serviceAccount = JSON.parse(
-    Buffer.from(process.env.FIREBASE_SERVICE_ACCOUNT_BASE64, 'base64').toString('utf8')
-  );
+  // On Render: secret file at /etc/secrets/firebase.json
+  // Locally: service account JSON in project root
+  const secretPath  = '/etc/secrets/firebase.json';
+  const localPath   = path.join(__dirname, '..', 'mtg-builder-28a10-firebase-adminsdk-fbsvc-841d4d5fe0.json');
+  const accountPath = fs.existsSync(secretPath) ? secretPath : localPath;
+
   admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount)
+    credential: admin.credential.cert(require(accountPath))
   });
 }
 
